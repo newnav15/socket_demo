@@ -1,0 +1,26 @@
+doctype 5
+html
+head
+	link(rel='stylesheet', href='style.css')
+	script(type='text/javascript',src='/socket.io/socket.io.js')
+	script(type='text/javascript',src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js')
+	script(type='text/javascript')
+		var socket=io.connect('http://localhost:3000');
+		socket.on('myEvent', function(data){
+			$("textarea#myArea").val(data);
+			
+		});
+		$(function () {
+			$("#submitButton").live("click", function(){
+				var data=$("textarea#myText").val();
+				socket.emit('clientEvent',data);
+			});
+		});
+		
+body
+h1= title
+	div
+		textarea(id='myText', value="Type here")
+		input(type='submit', value='Push', id="submitButton")
+	
+textarea(id='myArea')
